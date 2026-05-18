@@ -3,3 +3,6 @@
 venv
 env
 .idea
+backup.sqlite3
+oc-lettings-site_old.sqlite3
+flake8-report
