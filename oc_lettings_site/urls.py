@@ -1,3 +1,7 @@
+"""
+URLs module for oc_lettings_site app.
+Include the lettings and profiles apps urls
+"""
 from django.contrib import admin
 from django.urls import path, include
 

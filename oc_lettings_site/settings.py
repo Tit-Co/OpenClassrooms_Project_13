@@ -1,3 +1,6 @@
+"""
+Settings module for oc_lettings_site app
+"""
 import os
 
 from pathlib import Path

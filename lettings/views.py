@@ -1,4 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+"""
+Views module for lettings app
+"""
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 
 from .models import Letting
 
@@ -6,10 +10,23 @@ from .models import Letting
 # Aenean leo magna, vestibulum et tincidunt fermentum, consectetur quis velit. Sed non placerat
 # massa. Integer est nunc, pulvinar a tempor et, bibendum id arcu. Vestibulum ante ipsum primis in
 # faucibus orci luctus et ultrices posuere cubilia curae; Cras eget scelerisque
-def index(request):
-    lettings_list = Letting.objects.all()
-    context = {'lettings_list': lettings_list}
-    return render(request, 'lettings/index.html', context)
+def index(request: HttpRequest) -> HttpResponse:
+    """
+    View function for lettings index page
+    Args:
+        request (HttpRequest): Http Request object
+
+    Returns:
+        An HTTP response with the list of lettings or an HTTP response with 500 error.
+    """
+    try:
+        lettings_list = Letting.objects.all()
+        context = {'lettings_list': lettings_list}
+        return render(request, 'lettings/index.html', context)
+
+    except Exception as e:
+        context = {"error": str(e)}
+        return render(request, 'error_500.html', context=context)
 
 
 # Cras ultricies dignissim purus, vitae hendrerit ex varius non. In accumsan porta nisl id
@@ -21,7 +38,17 @@ def index(request):
 # tempus pharetra est luctus. Vivamus consequat aliquam libero, eget bibendum lorem. Sed non dolor
 # risus. Mauris condimentum auctor elementum. Donec quis nisi ligula. Integer vehicula tincidunt
 # enim, ac lacinia augue pulvinar sit amet.
-def letting(request, letting_id):
+def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
+    """
+    View function for letting detail page
+    Args:
+        request (HttpRequest): Http Request object
+        letting_id (int): letting id
+
+    Returns:
+        An HTTP response with the letting detail or an HTTP response with 404 error if not found
+        or an HTTP response with 500 error
+    """
     try:
         letting = Letting.objects.get(id=letting_id)
 
@@ -36,5 +63,5 @@ def letting(request, letting_id):
         return render(request, 'error_404.html', context=context)
 
     except Exception as e:
-        context = {"error": e}
+        context = {"error": str(e)}
         return render(request, 'error_500.html', context=context)

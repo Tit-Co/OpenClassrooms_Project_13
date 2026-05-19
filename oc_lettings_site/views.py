@@ -1,3 +1,7 @@
+"""
+Views module for oc_lettings_site app
+"""
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 
@@ -7,5 +11,18 @@ from django.shortcuts import render
 # consequat ipsum lobortis quis. Phasellus eleifend ex auctor venenatis tempus. Aliquam vitae erat
 # ac orci placerat luctus. Nullam elementum urna nisi, pellentesque iaculis enim cursus in.
 # Praesent volutpat porttitor magna, non finibus neque cursus id.
-def index(request):
-    return render(request, 'index.html')
+def index(request: HttpRequest) -> HttpResponse:
+    """
+    View function for home page
+    Args:
+        request (HttpRequest): Http Request object
+
+    Returns:
+        An HTTP response with index page or HTTP response with 500 error.
+    """
+    try:
+        return render(request, 'index.html')
+
+    except Exception as e:
+        context = {'error': str(e)}
+        return render(request, 'error_500.html', context)
