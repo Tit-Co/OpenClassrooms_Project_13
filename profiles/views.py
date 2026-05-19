@@ -17,6 +17,16 @@ def index(request):
 # id facilisis fringilla, eros leo tristique lacus, it. Nam aliquam dignissim congue. Pellentesque
 # habitant morbi tristique senectus et netus et males
 def profile(request, username):
-    profile = Profile.objects.get(user__username=username)
-    context = {'profile': profile}
-    return render(request, 'profiles/profile.html', context)
+    try:
+        profile = Profile.objects.get(user__username=username)
+        context = {'profile': profile}
+
+        return render(request, 'profiles/profile.html', context)
+
+    except Profile.DoesNotExist:
+        context = {"type": "profile", "name": username}
+        return render(request, 'error_404.html', context=context)
+
+    except Exception as e:
+        context = {"error": e}
+        return render(request, 'error_500.html', context=context)
