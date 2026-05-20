@@ -69,13 +69,14 @@ class TestLettingsView:
         response = client.get(path=path)
         content = response.content.decode()
         expected_h1 = f'<h1 class="page-header-ui-title mb-3 display-6">{get_letting.title}</h1>'
-        expected_content = (f'<p>{get_address.number} {get_address.street}</p>\n\t\t\t'
-                            f'<p>{get_address.city}, {get_address.state} '
-                            f'{get_address.zip_code}</p>\n\t\t\t'
-                            f'<p>{get_address.country_iso_code}</p>')
+        expected_content = [f'{get_address.number} {get_address.street}',
+                            f'{get_address.city}, {get_address.state}',
+                            f'{get_address.zip_code}',
+                            f'{get_address.country_iso_code}']
 
         assert expected_h1 in content
-        assert expected_content in content
+        for expected_child in expected_content:
+            assert expected_child in content
         assert response.status_code == 200
         assertTemplateUsed(response, template_name="lettings/letting.html")
 

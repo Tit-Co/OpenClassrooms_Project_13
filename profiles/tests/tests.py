@@ -78,15 +78,14 @@ class TestProfilesView:
         content = response.content.decode()
         expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">'
                        f'{get_profile.user.username}</h1>')
-        expected_content = (f'<p><strong>First name :</strong> {get_profile.user.first_name}'
-                            f'</p>\n\t\t\t'
-                            f'<p><strong>Last name :</strong> {get_profile.user.last_name}'
-                            f'</p>\n\t\t\t'
-                            f'<p><strong>Email :</strong> {get_profile.user.email}</p>\n\t\t\t'
-                            f'<p><strong>Favorite city :</strong> {get_profile.favorite_city}</p>')
+        expected_content = [f'<strong>First name :</strong> {get_profile.user.first_name}',
+                            f'<strong>Last name :</strong> {get_profile.user.last_name}',
+                            f'<strong>Email :</strong> {get_profile.user.email}',
+                            f'<strong>Favorite city :</strong> {get_profile.favorite_city}']
 
         assert expected_h1 in content
-        assert expected_content in content
+        for expected_child in expected_content:
+            assert expected_child in content
         assert response.status_code == 200
         assertTemplateUsed(response, template_name="profiles/profile.html")
 

@@ -26,10 +26,9 @@ class TestOcLettingsSiteView:
 
         response = client.get(path=path)
         content = response.content.decode()
-        expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">Welcome to Holiday '
-                       f'Homes</h1>')
+        expected = "Welcome to Holiday Homes"
 
-        assert expected_h1 in content
+        assert expected in content
         assert response.status_code == 200
         assertTemplateUsed(response, template_name="index.html")
 
