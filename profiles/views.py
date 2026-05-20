@@ -22,11 +22,11 @@ def index(request: HttpRequest) -> HttpResponse:
     try:
         profiles_list = Profile.objects.all()
         context = {'profiles_list': profiles_list}
-        return render(request, 'profiles/index.html', context)
+        return render(request, template_name='profiles/index.html', context=context, status=200)
 
     except Exception as e:
         context = {"error": str(e)}
-        return render(request, 'error_500.html', context=context)
+        return render(request, template_name='error_500.html', context=context, status=500)
 
 
 # Aliquam sed metus eget nisi tincidunt ornare accumsan eget lac
@@ -48,12 +48,12 @@ def profile(request: HttpRequest, username: str):
         profile = Profile.objects.get(user__username=username)
         context = {'profile': profile}
 
-        return render(request, 'profiles/profile.html', context)
+        return render(request, template_name='profiles/profile.html', context=context, status=200)
 
     except Profile.DoesNotExist:
         context = {"type": "profile", "name": username}
-        return render(request, 'error_404.html', context=context)
+        return render(request, template_name='error_404.html', context=context, status=404)
 
     except Exception as e:
         context = {"error": str(e)}
-        return render(request, 'error_500.html', context=context)
+        return render(request, template_name='error_500.html', context=context, status=500)

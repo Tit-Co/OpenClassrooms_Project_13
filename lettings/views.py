@@ -22,11 +22,11 @@ def index(request: HttpRequest) -> HttpResponse:
     try:
         lettings_list = Letting.objects.all()
         context = {'lettings_list': lettings_list}
-        return render(request, 'lettings/index.html', context)
+        return render(request, template_name='lettings/index.html', context=context, status=200)
 
     except Exception as e:
         context = {"error": str(e)}
-        return render(request, 'error_500.html', context=context)
+        return render(request, template_name='error_500.html', context=context, status=500)
 
 
 # Cras ultricies dignissim purus, vitae hendrerit ex varius non. In accumsan porta nisl id
@@ -56,12 +56,12 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
             'title': letting.title,
             'address': letting.address,
         }
-        return render(request, 'lettings/letting.html', context=context)
+        return render(request, template_name='lettings/letting.html', context=context, status=200)
 
     except Letting.DoesNotExist:
         context = {"type": "letting", "id": letting_id}
-        return render(request, 'error_404.html', context=context)
+        return render(request, template_name='error_404.html', context=context, status=404)
 
     except Exception as e:
         context = {"error": str(e)}
-        return render(request, 'error_500.html', context=context)
+        return render(request, template_name='error_500.html', context=context, status=500)

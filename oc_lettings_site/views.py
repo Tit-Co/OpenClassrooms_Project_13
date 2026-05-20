@@ -21,8 +21,8 @@ def index(request: HttpRequest) -> HttpResponse:
         An HTTP response with index page or HTTP response with 500 error.
     """
     try:
-        return render(request, 'index.html')
+        return render(request, template_name='index.html')
 
     except Exception as e:
         context = {'error': str(e)}
-        return render(request, 'error_500.html', context)
+        return render(request, template_name='error_500.html', context=context)
