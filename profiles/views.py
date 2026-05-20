@@ -3,6 +3,7 @@ Views module for profiles app
 """
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from monitoring import logger
 
 from profiles.models import Profile
 
@@ -22,10 +23,17 @@ def index(request: HttpRequest) -> HttpResponse:
     try:
         profiles_list = Profile.objects.all()
         context = {'profiles_list': profiles_list}
+
+        logger.info(f"Going to profiles index page : {context=}, status = 200.")
+
         return render(request, template_name='profiles/index.html', context=context, status=200)
 
     except Exception as e:
         context = {"error": str(e)}
+
+        logger.error(f"Error 500 returned while reaching profiles index page : {context=}"
+                     f", status = 500.")
+
         return render(request, template_name='error_500.html', context=context, status=500)
 
 
@@ -48,12 +56,22 @@ def profile(request: HttpRequest, username: str):
         profile = Profile.objects.get(user__username=username)
         context = {'profile': profile}
 
+        logger.info(f"Going to profile details page : {context=}, status = 200.")
+
         return render(request, template_name='profiles/profile.html', context=context, status=200)
 
-    except Profile.DoesNotExist:
-        context = {"type": "profile", "name": username}
+    except Profile.DoesNotExist as e:
+        context = {"type": "profile", "name": username, "error": str(e)}
+
+        logger.warning(f"Error 404 returned while reaching profile {username} : {context=},"
+                       f" status = 404.")
+
         return render(request, template_name='error_404.html', context=context, status=404)
 
     except Exception as e:
         context = {"error": str(e)}
+
+        logger.error(f"Error 500 returned while reaching profile details page : {context=},"
+                     f" status = 500.")
+
         return render(request, template_name='error_500.html', context=context, status=500)

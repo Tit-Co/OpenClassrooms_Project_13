@@ -5,6 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from .models import Letting
+from monitoring import logger
 
 
 # Aenean leo magna, vestibulum et tincidunt fermentum, consectetur quis velit. Sed non placerat
@@ -22,10 +23,17 @@ def index(request: HttpRequest) -> HttpResponse:
     try:
         lettings_list = Letting.objects.all()
         context = {'lettings_list': lettings_list}
+
+        logger.info(f"Going to lettings index page : {context=}, status = 200.")
+
         return render(request, template_name='lettings/index.html', context=context, status=200)
 
     except Exception as e:
         context = {"error": str(e)}
+
+        logger.error(f"Error 500 returned while reaching lettings index page : {context=},"
+                     f" status = 500.")
+
         return render(request, template_name='error_500.html', context=context, status=500)
 
 
@@ -56,12 +64,23 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
             'title': letting.title,
             'address': letting.address,
         }
+
+        logger.info(f"Going to lettings details page : {context=}, status = 200.")
+
         return render(request, template_name='lettings/letting.html', context=context, status=200)
 
-    except Letting.DoesNotExist:
-        context = {"type": "letting", "id": letting_id}
+    except Letting.DoesNotExist as e:
+        context = {"type": "letting", "id": letting_id, "error": str(e)}
+
+        logger.warning(f"Error 404 returned while reaching letting n°{letting_id} : {context=},"
+                       f" status = 404.")
+
         return render(request, template_name='error_404.html', context=context, status=404)
 
     except Exception as e:
         context = {"error": str(e)}
+
+        logger.error(f"Error 500 returned while reaching letting details page : {context=},"
+                     f" status = 500.")
+
         return render(request, template_name='error_500.html', context=context, status=500)

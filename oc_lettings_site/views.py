@@ -4,6 +4,8 @@ Views module for oc_lettings_site app
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
+from monitoring import init_sentry, logger
+
 
 # Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque molestie quam lobortis leo
 # consectetur ullamcorper non id est. Praesent dictum, nulla eget feugiat sagittis, sem mi
@@ -20,9 +22,16 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         An HTTP response with index page or HTTP response with 500 error.
     """
+    init_sentry()
     try:
+        logger.info(f"Going to home page : status = 200.")
+
         return render(request, template_name='index.html')
 
     except Exception as e:
         context = {'error': str(e)}
+
+        logger.error(f"Error 500 returned while reaching home page : {context=}"
+                     f", status = 500.")
+
         return render(request, template_name='error_500.html', context=context)
