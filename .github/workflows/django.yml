@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.10]
+        python-version: ["3.10"]
 
     steps:
     - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: flake8-report
-        path: flake8-report/
+        path: flake8-report/index.html
         retention-days: 5
     - name: Run Tests
       run: |
@@ -44,6 +44,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: cov_html
-        path: cov_html/
+        path: cov_html/index.html
         retention-days: 5
   
