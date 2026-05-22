@@ -34,7 +34,8 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: flake8-report
-        path: flake8-report/index.html
+        path: flake8-report/
+        if-no-files-found: warn
         retention-days: 5
     - name: Run Tests
       run: |
@@ -44,6 +45,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: cov_html
-        path: cov_html/index.html
+        path: cov_html/
+        if-no-files-found: warn
         retention-days: 5
-  
