@@ -13,9 +13,5 @@ env
 backup.sqlite3
 oc-lettings-site_old.sqlite3
 
-# Reports
-flake8-report
-cov_html
-
 # .env file
 .env
