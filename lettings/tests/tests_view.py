@@ -1,29 +1,14 @@
 """
-Tests module for lettings app
+Tests module for lettings app views
 """
 import pytest
 
-from django.urls import reverse, resolve
+from django.urls import reverse
 from django.test import Client
 from pytest_django.asserts import assertTemplateUsed
 from _pytest.monkeypatch import MonkeyPatch
 
 from lettings.models import Letting, Address
-
-
-class TestLettingsUrl:
-    def test_lettings_index_url(self):
-        path = reverse(viewname="lettings:index")
-
-        assert path == "/lettings/"
-        assert resolve(path).view_name == "lettings:index"
-
-    @pytest.mark.django_db
-    def test_lettings_letting_url(self, get_address: Address, get_letting: Letting):
-        path = reverse(viewname="lettings:letting", kwargs={"letting_id": get_letting.id})
-
-        assert path == "/lettings/1/"
-        assert resolve(path).view_name == "lettings:letting"
 
 
 class TestLettingsView:
@@ -115,17 +100,3 @@ class TestLettingsView:
         assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="error_500.html")
-
-
-class TestLettingsModel:
-    @pytest.mark.django_db
-    def test_lettings_address_model_ok(self, get_address: Address):
-        expected = f"{get_address.number} {get_address.street}"
-
-        assert str(get_address) == expected
-
-    @pytest.mark.django_db
-    def test_lettings_letting_model_ok(self, get_letting: Letting):
-        expected = f"{get_letting.title}"
-
-        assert str(get_letting) == expected

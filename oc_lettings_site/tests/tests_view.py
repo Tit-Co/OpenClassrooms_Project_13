@@ -1,21 +1,13 @@
 """
-Tests module for oc_lettings_site app
+Tests module for oc_lettings_site app views
 """
 import pytest
 
 from django.template.response import TemplateResponse
 from django.test import Client
-from django.urls import reverse, resolve
+from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed
 from _pytest.monkeypatch import MonkeyPatch
-
-
-class TestOcLettingsSiteUrl:
-    def test_index_url(self):
-        path = reverse("index")
-
-        assert path == "/"
-        assert resolve(path).view_name == 'index'
 
 
 class TestOcLettingsSiteView:

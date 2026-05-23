@@ -1,36 +1,14 @@
 """
-Tests module for profiles app
+Tests module for profiles app views
 """
 import pytest
 
-from django.contrib.auth.models import User
-from django.urls import reverse, resolve
+from django.urls import reverse
 from django.test import Client
 from pytest_django.asserts import assertTemplateUsed
 from _pytest.monkeypatch import MonkeyPatch
 
 from profiles.models import Profile
-
-
-class TestProfilesUrl:
-    def test_profiles_index_url(self):
-        path = reverse("profiles:index")
-
-        assert path == "/profiles/"
-        assert resolve(path).view_name == 'profiles:index'
-
-    @pytest.mark.django_db
-    def test_profiles_profile_url(self):
-        Profile.objects.create(user=User.objects.create_user(username="Username",
-                                                             first_name='First Name',
-                                                             last_name='Last Name',
-                                                             email='test@test.com'),
-                               favorite_city="Paris")
-
-        path = reverse(viewname="profiles:profile", kwargs={'username': "Username"})
-
-        assert path == "/profiles/Username/"
-        assert resolve(path).view_name == "profiles:profile"
 
 
 class TestProfilesView:
@@ -124,11 +102,3 @@ class TestProfilesView:
         assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="error_500.html")
-
-
-class TestProfilesModel:
-    @pytest.mark.django_db
-    def test_profiles_profile_model_ok(self, get_profile: Profile):
-        expected = f"{get_profile.user.username}"
-
-        assert str(get_profile) == expected
