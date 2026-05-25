@@ -76,6 +76,12 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/oc_lettings_site
 
+      - name: Debug files
+        run: |
+          pwd
+          ls -la
+          cat Dockerfile
+
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v4
