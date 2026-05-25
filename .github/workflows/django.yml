@@ -78,12 +78,6 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/oc_lettings_site
 
-      - name: Debug files
-        run: |
-          pwd
-          ls -la
-          cat Dockerfile
-
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v4
@@ -94,16 +88,15 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-      - uses: akhileshns/heroku-deploy@v3.15.15
+      - name: Deploy to Heroku
+        uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "orange-county-lettings"
-          heroku_email: ${{ secrets.HEROKU_USER_EMAIL }}
-          usedocker: true
-          docker_build_args: |
-            SENTRY_KEY
+          email: ${{ secrets.HEROKU_USER_EMAIL }}
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          process_type: web
+          docker_options: "--no-cache"
         env:
           SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
