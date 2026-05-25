@@ -78,7 +78,11 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/oc_lettings_site
 
-      - run: ls -R $GITHUB_WORKSPACE
+      - name: Debug workspace
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 3 -type f
 
       - name: Build and push Docker image
         id: push
