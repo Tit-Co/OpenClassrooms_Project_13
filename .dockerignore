@@ -1,0 +1,33 @@
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+
+dist/
+build/
+*.log
+
+.env
+.env.local
+*.pem
+*.key
+secrets/
+.npmrc
+.pypirc
+kubeconfig
+
+cov_html
+flake8-report
+
+oc-lettings-site.sqlite3
+
+# Docker
+# Dockerfile*
+# docker-compose*.yml
+# .dockerignore
