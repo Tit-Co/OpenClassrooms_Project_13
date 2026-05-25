@@ -78,6 +78,8 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/oc_lettings_site
 
+      - run: ls -R $GITHUB_WORKSPACE
+
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v4

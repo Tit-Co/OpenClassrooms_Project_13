@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-debug_var = os.environ.get("DEBUG", default="1")
+debug_var = os.environ.get("DEBUG", default="0")
 DEBUG = True if debug_var and debug_var.lower() in ["true", "1", "yes"] else False
 
 host_var = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
@@ -115,10 +115,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
 
-STATIC_HOST = os.environ.get("DJANGO_STATIC_HOST", "")
-STATIC_URL = STATIC_HOST + "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [BASE_DIR / "static", ]
 

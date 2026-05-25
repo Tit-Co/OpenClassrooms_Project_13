@@ -24,10 +24,3 @@ kubeconfig
 
 cov_html
 flake8-report
-
-oc-lettings-site.sqlite3
-
-# Docker
-# Dockerfile*
-# docker-compose*.yml
-# .dockerignore
