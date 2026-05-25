@@ -88,6 +88,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v4
         with:
+          no-cache: true
           context: .
           file: ./Dockerfile
           push: true
