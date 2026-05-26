@@ -5,6 +5,7 @@
 # Virtual environment
 venv
 env
+env-docs
 
 # Idea
 .idea
