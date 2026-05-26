@@ -78,12 +78,6 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/oc_lettings_site
 
-      - name: Debug workspace
-        run: |
-          pwd
-          ls -la
-          find . -maxdepth 3 -type f
-
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v4

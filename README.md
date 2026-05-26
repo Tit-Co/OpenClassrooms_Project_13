@@ -103,11 +103,14 @@ git clone https://github.com/Tit-Co/OpenClassrooms_Project_13.git
   - `python manage.py runserver`
 
 ### Launching the APP
-
-- Finally, in a web browser, open the urls :
+- With local server, open a web browser and type the urls :
   - [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
   - [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) 
-    - for the admin panel (username: ```admin```, password: ```Abc1234!```)
+    - for the admin panel (username: ```admin```, password: given in the project technical specifications)
+    
+- With web server (after deployment), open a web browser and type the url :
+    - your Heroku app url given in the Heroku dashboard, for example the url below : 
+[Heroku app](https://orange-county-lettings-7b4c4811f25f.herokuapp.com/)
     
 ---
 
@@ -144,27 +147,27 @@ Here are some examples of the application execution.
 
 ## PEP 8 CONVENTIONS
 
-- Flake 8 report
+- ### Flake 8 report
 <p align="center">
     <img src="docs/flake8_report.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
 </p>
 
-**Type the line below in the terminal to generate another report with [flake8-html](https://pypi.org/project/flake8-html/) tool :**
+- **Type the line below in the terminal to generate another report with [flake8-html](https://pypi.org/project/flake8-html/) tool :**
 
-` flake8`
-- The app code has a setup.cfg file that specify Flake 8 options as below : 
-    ```
-    format = html
-    htmldir = flake8-report
-    max-line-length = 99
-    exclude = **/migrations/*,env,cov_html
-    ```
+    ` flake8`
+    - The app code has a setup.cfg file that specify Flake 8 options as below : 
+        ```
+        format = html
+        htmldir = flake8-report
+        max-line-length = 99
+        exclude = **/migrations/*,env,cov_html
+        ```
 
 ---
 
 ## TESTS COVERAGE WITH PYTEST
 
-- Coverage report
+- ### Coverage report
 <p align="center">
     <img src="docs/cov_report_1.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
     <img src="docs/cov_report_2.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
@@ -172,7 +175,77 @@ Here are some examples of the application execution.
 
 - **Type the line below in the terminal to generate another coverage report with pytest**
 
-    `pytest --cov=lettings --cov=profiles --cov=oc_lettings_site --cov-report=html:cov_html`
+    `pytest`
+    - The app code has a setup.cfg file that specify Pytest options as below : 
+        ```
+        python_files = tests*.py
+        addopts = -v --cov=lettings --cov=profiles --cov=oc_lettings_site --cov-report=html:cov_html
+        ```
+---
+
+## DEPLOYMENT
+- ### Docker
+  - The application is containerized using Docker.
+  - The Dockerfile located at the project root defines the build process:
+    - install Python dependencies 
+    - copy the Django project
+    - collect static files
+    - start the application with Gunicorn
+
+  - The container can be executed locally for testing purposes.
+
+- ### CI/CD Pipeline
+  - The CI/CD pipeline is defined in .github/workflows/.
+
+  - Continuous Integration
+
+  - The CI workflow runs on every branch push and includes:
+    - repository checkout
+    - dependency installation
+    - linting
+    - test execution with pytest
+    - coverage and quality report generation
+    - Continuous Deployment
+
+  - Deployment is only triggered on the master branch after successful CI validation.
+
+  - The deployment workflow:
+    - builds the Docker image
+    - pushes the image to Heroku Container Registry
+    - releases the application on Heroku
+
+- ### Heroku Deployment
+  - The application is deployed on Heroku using the container stack.
+
+  - Required environment variables must be configured in the Heroku dashboard:
+
+    - `DEBUG`
+    - `DJANGO_ALLOWED_HOSTS`
+    - `SECRET_KEY`
+
+- ### Monitoring
+  - Application monitoring and exception tracking are handled using Sentry.
+
+  - To enable monitoring:
+    - Create a Sentry account
+    - Generate a project key
+    - Add the key as a GitHub repository secret:
+      - `SENTRY_KEY`
+
+  - The secret is injected into the deployment workflow through GitHub Actions.
+
+## DOCUMENTATION
+- ### ReadTheDocs documentation :
+  - A ReadTheDocs documentation for technical specifications is linked to the repository
+  - The documentation includes :
+    - a project description
+    - project installation instructions
+    - a quick start guide
+    - the technologies and programming languages to be used
+    - a description of the database structure and data models
+    - a description of the programming interfaces
+    - a user guide (with use cases)
+    - application deployment and management procedures
 
 ---
 
