@@ -23,7 +23,7 @@ The application must:
 
 ## PROJECT STRUCTURE
 <p align="center">
-    <img src="docs/structure.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
+    <img src="docs/screenshots/structure_screenshot.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
 </p>
 
 ---
@@ -149,7 +149,7 @@ Here are some examples of the application execution.
 
 - ### Flake 8 report
 <p align="center">
-    <img src="docs/flake8_report.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
+    <img src="docs/screenshots/flake8_report_screenshot.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
 </p>
 
 - **Type the line below in the terminal to generate another report with [flake8-html](https://pypi.org/project/flake8-html/) tool :**
@@ -169,8 +169,8 @@ Here are some examples of the application execution.
 
 - ### Coverage report
 <p align="center">
-    <img src="docs/cov_report_1.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
-    <img src="docs/cov_report_2.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
+    <img src="docs/screenshots/cov_report_1_screenshot.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
+    <img src="docs/screenshots/cov_report_2_screenshot.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
 </p>
 
 - **Type the line below in the terminal to generate another coverage report with pytest**
@@ -252,6 +252,7 @@ Here are some examples of the application execution.
 ![Python](https://img.shields.io/badge/python-3.10-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-red)
+[![Documentation Status](https://readthedocs.org/projects/tit-co-oc-lettings-documentation/badge/?version=latest)](https://tit-co-oc-lettings-documentation.readthedocs.io/en/latest/)
 
 ---
 
