@@ -44,7 +44,7 @@ class TestLettingsView:
 
         assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")
 
     @pytest.mark.django_db
     def test_lettings_letting_view_ok(self, get_address: Address, get_letting: Letting):
@@ -78,7 +78,7 @@ class TestLettingsView:
 
         assert expected_h1 in content
         assert response.status_code == 404
-        assertTemplateUsed(response, template_name="error_404.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_404.html")
 
     @pytest.mark.django_db
     def test_lettings_letting_view_returns_500(self,
@@ -99,4 +99,4 @@ class TestLettingsView:
 
         assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")

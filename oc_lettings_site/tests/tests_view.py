@@ -22,12 +22,12 @@ class TestOcLettingsSiteView:
 
         assert expected in content
         assert response.status_code == 200
-        assertTemplateUsed(response, template_name="index.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/index.html")
 
     @pytest.mark.django_db
     def test_oc_lettings_site_index_view_returns_500(self, monkeypatch: MonkeyPatch):
         def side_effect(request, template_name, context=None, status=500):
-            if template_name == "index.html":
+            if template_name == "oc_lettings_site/index.html":
                 raise Exception("forced error")
             return TemplateResponse(request, template_name, context or {}, status=status)
 
@@ -43,4 +43,4 @@ class TestOcLettingsSiteView:
 
         assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")

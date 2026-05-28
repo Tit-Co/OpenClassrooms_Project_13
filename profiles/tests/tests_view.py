@@ -45,7 +45,7 @@ class TestProfilesView:
 
         assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")
 
     @pytest.mark.django_db
     def test_profiles_profile_view_ok(self, get_profile: Profile):
@@ -80,7 +80,7 @@ class TestProfilesView:
 
         assert expected_h1 in content
         assert response.status_code == 404
-        assertTemplateUsed(response, template_name="error_404.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_404.html")
 
     @pytest.mark.django_db
     def test_profiles_profile_view_returns_500(self,
@@ -101,4 +101,4 @@ class TestProfilesView:
 
         assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")
