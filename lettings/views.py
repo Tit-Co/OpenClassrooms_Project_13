@@ -26,7 +26,10 @@ def index(request: HttpRequest) -> HttpResponse:
 
         logger.info(f"Going to lettings index page : {context=}, status = 200.")
 
-        return render(request, template_name='lettings/index.html', context=context, status=200)
+        return render(request=request,
+                      template_name='lettings/index.html',
+                      context=context,
+                      status=200)
 
     except Exception as e:
         context = {"error": str(e)}
@@ -34,7 +37,7 @@ def index(request: HttpRequest) -> HttpResponse:
         logger.error(f"Error 500 returned while reaching lettings index page : {context=},"
                      f" status = 500.")
 
-        return render(request,
+        return render(request=request,
                       template_name='oc_lettings_site/error_500.html',
                       context=context,
                       status=500)
@@ -70,7 +73,10 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
 
         logger.info(f"Going to lettings details page : {context=}, status = 200.")
 
-        return render(request, template_name='lettings/letting.html', context=context, status=200)
+        return render(request=request,
+                      template_name='lettings/letting.html',
+                      context=context,
+                      status=200)
 
     except Letting.DoesNotExist as e:
         context = {"type": "letting", "id": letting_id, "error": str(e)}
@@ -78,7 +84,7 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
         logger.warning(f"Error 404 returned while reaching letting n°{letting_id} : {context=},"
                        f" status = 404.")
 
-        return render(request,
+        return render(request=request,
                       template_name='oc_lettings_site/error_404.html',
                       context=context,
                       status=404)
@@ -89,7 +95,7 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
         logger.error(f"Error 500 returned while reaching letting details page : {context=},"
                      f" status = 500.")
 
-        return render(request,
+        return render(request=request,
                       template_name='oc_lettings_site/error_500.html',
                       context=context,
                       status=500)

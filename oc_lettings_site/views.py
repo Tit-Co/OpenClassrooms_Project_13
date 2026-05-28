@@ -26,7 +26,7 @@ def index(request: HttpRequest) -> HttpResponse:
     try:
         logger.info(f"Going to home page : status = 200.")
 
-        return render(request, template_name='oc_lettings_site/index.html')
+        return render(request=request, template_name='oc_lettings_site/index.html')
 
     except Exception as e:
         context = {'error': str(e)}
@@ -34,4 +34,6 @@ def index(request: HttpRequest) -> HttpResponse:
         logger.error(f"Error 500 returned while reaching home page : {context=}"
                      f", status = 500.")
 
-        return render(request, template_name='oc_lettings_site/error_500.html', context=context)
+        return render(request=request,
+                      template_name='oc_lettings_site/error_500.html',
+                      context=context)
