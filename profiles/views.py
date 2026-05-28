@@ -34,7 +34,7 @@ def index(request: HttpRequest) -> HttpResponse:
         logger.error(f"Error 500 returned while reaching profiles index page : {context=}"
                      f", status = 500.")
 
-        return render(request, template_name='error_500.html', context=context, status=500)
+        return render(request, template_name='oc_lettings_site/error_500.html', context=context, status=500)
 
 
 # Aliquam sed metus eget nisi tincidunt ornare accumsan eget lac
@@ -66,7 +66,7 @@ def profile(request: HttpRequest, username: str):
         logger.warning(f"Error 404 returned while reaching profile {username} : {context=},"
                        f" status = 404.")
 
-        return render(request, template_name='error_404.html', context=context, status=404)
+        return render(request, template_name='oc_lettings_site/error_404.html', context=context, status=404)
 
     except Exception as e:
         context = {"error": str(e)}
@@ -74,4 +74,4 @@ def profile(request: HttpRequest, username: str):
         logger.error(f"Error 500 returned while reaching profile details page : {context=},"
                      f" status = 500.")
 
-        return render(request, template_name='error_500.html', context=context, status=500)
+        return render(request, template_name='oc_lettings_site/error_500.html', context=context, status=500)
