@@ -29,15 +29,22 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request=request, template_name='oc_lettings_site/index.html')
 
 
-def custom_404(request, exception):
-    context = {"error": str(exception)}
+def custom_404(request: HttpRequest, exception: Exception) -> HttpResponse:
+    path = request.path
+    elements = path.split("/")
+    context_type = elements[1][:-1]
+
+    context = {"type": context_type,
+               "element": str(elements[-2]),
+               "error": str(exception)}
+
     return render(request=request,
                   template_name="oc_lettings_site/404.html",
                   context=context,
                   status=404)
 
 
-def custom_500(request):
+def custom_500(request: HttpRequest) -> HttpResponse:
     return render(request=request,
                   template_name="oc_lettings_site/500.html",
                   status=500)

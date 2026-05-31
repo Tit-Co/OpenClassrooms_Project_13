@@ -75,6 +75,7 @@ class TestProfilesView:
 
         assert response.status_code == 404
         assertTemplateUsed(response, template_name="oc_lettings_site/404.html")
+        assert "404 Error : profile \'test\' not found !" in response.content.decode()
 
     @pytest.mark.django_db
     def test_profiles_profile_view_returns_500(self,

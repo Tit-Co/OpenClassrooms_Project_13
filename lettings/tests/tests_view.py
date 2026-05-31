@@ -73,6 +73,7 @@ class TestLettingsView:
 
         assert response.status_code == 404
         assertTemplateUsed(response, template_name="oc_lettings_site/404.html")
+        assert "404 Error : letting n\xb0 2 not found !" in response.content.decode()
 
     @pytest.mark.django_db
     def test_lettings_letting_view_returns_500(self,

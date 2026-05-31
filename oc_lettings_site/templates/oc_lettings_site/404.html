@@ -8,9 +8,9 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             {% if type == "letting" %}
-                <h1 class="page-header-ui-title mb-3 display-6">404 Error : {{ type }} n° {{ id }} not found !</h1>
+                <h1 class="page-header-ui-title mb-3 display-6">404 Error : {{ type }} n° {{ element }} not found !</h1>
             {% elif type == "profile" %}
-                <h1 class="page-header-ui-title mb-3 display-6">404 Error : {{ type }} '{{ name }}' not found !</h1>
+                <h1 class="page-header-ui-title mb-3 display-6">404 Error : {{ type }} '{{ element }}' not found !</h1>
             {% endif %}
         </div>
     </div>
