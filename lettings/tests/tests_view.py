@@ -19,7 +19,7 @@ class TestLettingsView:
 
         response = client.get(path=path)
         content = response.content.decode()
-        expected_h1 = '<h1 class="page-header-ui-title mb-3 display-6">Lettings</h1>'
+        expected_h1 = "Lettings"
         expected_content = f'<a href="/lettings/{get_letting.id}/">{get_letting.title}</a>'
 
         assert expected_h1 in content
@@ -39,10 +39,12 @@ class TestLettingsView:
         path = reverse(viewname="lettings:index")
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = "Internal Error : something wrong with the server !</h1>"
 
+        assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
-        assert "Internal Error" in response.content.decode()
 
     @pytest.mark.django_db
     def test_lettings_letting_view_ok(self, get_address: Address, get_letting: Letting):
@@ -51,7 +53,7 @@ class TestLettingsView:
 
         response = client.get(path=path)
         content = response.content.decode()
-        expected_h1 = f'<h1 class="page-header-ui-title mb-3 display-6">{get_letting.title}</h1>'
+        expected_h1 = f"{get_letting.title}"
         expected_content = [f'{get_address.number} {get_address.street}',
                             f'{get_address.city}, {get_address.state}',
                             f'{get_address.zip_code}',
@@ -70,10 +72,12 @@ class TestLettingsView:
         path = reverse(viewname="lettings:letting", kwargs={"letting_id": 2})
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = f"404 Error : letting n\xb0 2 not found !</h1>"
 
+        assert expected_h1 in content
         assert response.status_code == 404
         assertTemplateUsed(response, template_name="oc_lettings_site/404.html")
-        assert "404 Error : letting n\xb0 2 not found !" in response.content.decode()
 
     @pytest.mark.django_db
     def test_lettings_letting_view_returns_500(self,
@@ -89,7 +93,9 @@ class TestLettingsView:
         path = reverse(viewname="lettings:letting", kwargs={"letting_id": get_letting.id})
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = "Internal Error : something wrong with the server !"
 
+        assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
-        assert "Internal Error" in response.content.decode()

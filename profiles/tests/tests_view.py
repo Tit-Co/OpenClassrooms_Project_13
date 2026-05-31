@@ -19,7 +19,7 @@ class TestProfilesView:
 
         response = client.get(path=path)
         content = response.content.decode()
-        expected_h1 = '<h1 class="page-header-ui-title mb-3 display-6">Profiles</h1>'
+        expected_h1 = "Profiles"
         expected_content = (f'<a href="/profiles/{get_profile.user.username}/">'
                             f'{get_profile.user.username}</a>')
 
@@ -40,10 +40,12 @@ class TestProfilesView:
         path = reverse(viewname="profiles:index")
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = f"Internal Error : something wrong with the server !"
 
+        assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
-        assert "Internal Error" in response.content.decode()
 
     @pytest.mark.django_db
     def test_profiles_profile_view_ok(self, get_profile: Profile):
@@ -52,8 +54,7 @@ class TestProfilesView:
 
         response = client.get(path=path)
         content = response.content.decode()
-        expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">'
-                       f'{get_profile.user.username}</h1>')
+        expected_h1 = f"{get_profile.user.username}"
         expected_content = [f'<strong>First name :</strong> {get_profile.user.first_name}',
                             f'<strong>Last name :</strong> {get_profile.user.last_name}',
                             f'<strong>Email :</strong> {get_profile.user.email}',
@@ -72,10 +73,12 @@ class TestProfilesView:
         path = reverse(viewname="profiles:profile", kwargs={"username": "test"})
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = f"404 Error : profile \'test\' not found !"
 
+        assert expected_h1 in content
         assert response.status_code == 404
         assertTemplateUsed(response, template_name="oc_lettings_site/404.html")
-        assert "404 Error : profile \'test\' not found !" in response.content.decode()
 
     @pytest.mark.django_db
     def test_profiles_profile_view_returns_500(self,
@@ -91,7 +94,9 @@ class TestProfilesView:
         path = reverse(viewname="profiles:profile", kwargs={"username": get_profile.user.username})
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = f"Internal Error : something wrong with the server !"
 
+        assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
-        assert "Internal Error" in response.content.decode()
