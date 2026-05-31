@@ -2,7 +2,7 @@
 Views module for profiles app
 """
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from monitoring import logger
 
 from profiles.models import Profile
@@ -20,27 +20,16 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         An HTTP response with the list of profiles or HTTP response with 500 error.
     """
-    try:
-        profiles_list = Profile.objects.all()
-        context = {'profiles_list': profiles_list}
 
-        logger.info(f"Going to profiles index page : {context=}, status = 200.")
+    profiles_list = Profile.objects.all()
+    context = {'profiles_list': profiles_list}
 
-        return render(request=request,
-                      template_name='profiles/index.html',
-                      context=context,
-                      status=200)
+    logger.info(f"Going to profiles index page : {context=}, status = 200.")
 
-    except Exception as e:
-        context = {"error": str(e)}
-
-        logger.error(f"Error 500 returned while reaching profiles index page : {context=}"
-                     f", status = 500.")
-
-        return render(request=request,
-                      template_name='oc_lettings_site/error_500.html',
-                      context=context,
-                      status=500)
+    return render(request=request,
+                  template_name='profiles/index.html',
+                  context=context,
+                  status=200)
 
 
 # Aliquam sed metus eget nisi tincidunt ornare accumsan eget lac
@@ -58,32 +47,10 @@ def profile(request: HttpRequest, username: str):
         An HTTP response with the profile or HTTP response with 404 error if not found
         or an HTTP response with 500 error
     """
-    try:
-        profile = Profile.objects.get(user__username=username)
-        context = {'profile': profile}
 
-        logger.info(f"Going to profile details page : {context=}, status = 200.")
+    profile = get_object_or_404(Profile, user__username=username)
+    context = {'profile': profile}
 
-        return render(request, template_name='profiles/profile.html', context=context, status=200)
+    logger.info(f"Going to profile details page : {context=}, status = 200.")
 
-    except Profile.DoesNotExist as e:
-        context = {"type": "profile", "name": username, "error": str(e)}
-
-        logger.warning(f"Error 404 returned while reaching profile {username} : {context=},"
-                       f" status = 404.")
-
-        return render(request=request,
-                      template_name='oc_lettings_site/error_404.html',
-                      context=context,
-                      status=404)
-
-    except Exception as e:
-        context = {"error": str(e)}
-
-        logger.error(f"Error 500 returned while reaching profile details page : {context=},"
-                     f" status = 500.")
-
-        return render(request=request,
-                      template_name='oc_lettings_site/error_500.html',
-                      context=context,
-                      status=500)
+    return render(request, template_name='profiles/profile.html', context=context, status=200)

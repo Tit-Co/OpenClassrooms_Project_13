@@ -2,7 +2,7 @@
 Views module for lettings app
 """
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Letting
 from monitoring import logger
@@ -20,27 +20,16 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         An HTTP response with the list of lettings or an HTTP response with 500 error.
     """
-    try:
-        lettings_list = Letting.objects.all()
-        context = {'lettings_list': lettings_list}
 
-        logger.info(f"Going to lettings index page : {context=}, status = 200.")
+    lettings_list = Letting.objects.all()
+    context = {'lettings_list': lettings_list}
 
-        return render(request=request,
-                      template_name='lettings/index.html',
-                      context=context,
-                      status=200)
+    logger.info(f"Going to lettings index page : {context=}, status = 200.")
 
-    except Exception as e:
-        context = {"error": str(e)}
-
-        logger.error(f"Error 500 returned while reaching lettings index page : {context=},"
-                     f" status = 500.")
-
-        return render(request=request,
-                      template_name='oc_lettings_site/error_500.html',
-                      context=context,
-                      status=500)
+    return render(request=request,
+                  template_name='lettings/index.html',
+                  context=context,
+                  status=200)
 
 
 # Cras ultricies dignissim purus, vitae hendrerit ex varius non. In accumsan porta nisl id
@@ -63,39 +52,17 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
         An HTTP response with the letting detail or an HTTP response with 404 error if not found
         or an HTTP response with 500 error
     """
-    try:
-        letting = Letting.objects.get(id=letting_id)
 
-        context = {
-            'title': letting.title,
-            'address': letting.address,
-        }
+    letting = get_object_or_404(Letting, id=letting_id)
 
-        logger.info(f"Going to lettings details page : {context=}, status = 200.")
+    context = {
+        'title': letting.title,
+        'address': letting.address,
+    }
 
-        return render(request=request,
-                      template_name='lettings/letting.html',
-                      context=context,
-                      status=200)
+    logger.info(f"Going to lettings details page : {context=}, status = 200.")
 
-    except Letting.DoesNotExist as e:
-        context = {"type": "letting", "id": letting_id, "error": str(e)}
-
-        logger.warning(f"Error 404 returned while reaching letting n°{letting_id} : {context=},"
-                       f" status = 404.")
-
-        return render(request=request,
-                      template_name='oc_lettings_site/error_404.html',
-                      context=context,
-                      status=404)
-
-    except Exception as e:
-        context = {"error": str(e)}
-
-        logger.error(f"Error 500 returned while reaching letting details page : {context=},"
-                     f" status = 500.")
-
-        return render(request=request,
-                      template_name='oc_lettings_site/error_500.html',
-                      context=context,
-                      status=500)
+    return render(request=request,
+                  template_name='lettings/letting.html',
+                  context=context,
+                  status=200)

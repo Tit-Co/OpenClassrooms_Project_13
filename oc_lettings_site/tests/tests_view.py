@@ -34,13 +34,11 @@ class TestOcLettingsSiteView:
         monkeypatch.setattr("oc_lettings_site.views.render", side_effect)
 
         client = Client()
+        client.raise_request_exception = False
         path = reverse(viewname="index")
 
         response = client.get(path=path)
-        content = response.content.decode()
-        expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">500 Error : '
-                       f'something wrong with the server - forced error</h1>')
 
-        assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
+        assert "Internal Error" in response.content.decode()

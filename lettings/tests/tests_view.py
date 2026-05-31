@@ -4,7 +4,7 @@ Tests module for lettings app views
 import pytest
 
 from django.urls import reverse
-from django.test import Client
+from django.test import Client, override_settings
 from pytest_django.asserts import assertTemplateUsed
 from _pytest.monkeypatch import MonkeyPatch
 
@@ -35,16 +35,14 @@ class TestLettingsView:
         monkeypatch.setattr("lettings.views.Letting.objects.all", raise_error)
 
         client = Client()
+        client.raise_request_exception = False
         path = reverse(viewname="lettings:index")
 
         response = client.get(path=path)
-        content = response.content.decode()
-        expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">500 Error : '
-                       f'something wrong with the server - forced error</h1>')
 
-        assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
+        assert "Internal Error" in response.content.decode()
 
     @pytest.mark.django_db
     def test_lettings_letting_view_ok(self, get_address: Address, get_letting: Letting):
@@ -65,20 +63,16 @@ class TestLettingsView:
         assert response.status_code == 200
         assertTemplateUsed(response, template_name="lettings/letting.html")
 
+    @override_settings(DEBUG=False)
     @pytest.mark.django_db
     def test_lettings_letting_view_returns_404(self, get_address: Address, get_letting: Letting):
         client = Client()
         path = reverse(viewname="lettings:letting", kwargs={"letting_id": 2})
 
         response = client.get(path=path)
-        content = response.content.decode()
 
-        expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">404 Error : '
-                       f'letting n\xb0 2 not found !</h1>')
-
-        assert expected_h1 in content
         assert response.status_code == 404
-        assertTemplateUsed(response, template_name="oc_lettings_site/error_404.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/404.html")
 
     @pytest.mark.django_db
     def test_lettings_letting_view_returns_500(self,
@@ -87,16 +81,14 @@ class TestLettingsView:
         def raise_error(*args, **kwargs):
             raise Exception("forced error")
 
-        monkeypatch.setattr("lettings.views.Letting.objects.get", raise_error)
+        monkeypatch.setattr("lettings.views.get_object_or_404", raise_error)
 
         client = Client()
+        client.raise_request_exception = False
         path = reverse(viewname="lettings:letting", kwargs={"letting_id": get_letting.id})
 
         response = client.get(path=path)
-        content = response.content.decode()
-        expected_h1 = (f'<h1 class="page-header-ui-title mb-3 display-6">500 Error : '
-                       f'something wrong with the server - forced error</h1>')
 
-        assert expected_h1 in content
         assert response.status_code == 500
-        assertTemplateUsed(response, template_name="oc_lettings_site/error_500.html")
+        assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
+        assert "Internal Error" in response.content.decode()

@@ -23,17 +23,21 @@ def index(request: HttpRequest) -> HttpResponse:
         An HTTP response with index page or HTTP response with 500 error.
     """
     init_sentry()
-    try:
-        logger.info(f"Going to home page : status = 200.")
 
-        return render(request=request, template_name='oc_lettings_site/index.html')
+    logger.info(f"Going to home page : status = 200.")
 
-    except Exception as e:
-        context = {'error': str(e)}
+    return render(request=request, template_name='oc_lettings_site/index.html')
 
-        logger.error(f"Error 500 returned while reaching home page : {context=}"
-                     f", status = 500.")
 
-        return render(request=request,
-                      template_name='oc_lettings_site/error_500.html',
-                      context=context)
+def custom_404(request, exception):
+    context = {"error": str(exception)}
+    return render(request=request,
+                  template_name="oc_lettings_site/404.html",
+                  context=context,
+                  status=404)
+
+
+def custom_500(request):
+    return render(request=request,
+                  template_name="oc_lettings_site/500.html",
+                  status=500)

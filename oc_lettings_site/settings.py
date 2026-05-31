@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get(key="SECRET_KEY", default="dummy-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-debug_var = os.environ.get(key="DEBUG", default="0")
+debug_var = os.environ.get(key="DEBUG", default="1")
 DEBUG = True if debug_var and debug_var.lower() in ["true", "1", "yes"] else False
 
 host_var = os.environ.get(key="DJANGO_ALLOWED_HOSTS", default="localhost,127.0.0.1")

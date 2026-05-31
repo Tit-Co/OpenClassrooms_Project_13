@@ -199,6 +199,7 @@ Key                    Value
 DEBUG                  False (required for production deployment, True otherwise in dev)
 DJANGO_ALLOWED_HOSTS   localhost,127.0.0.1,<your heroku url>.herokuapp.com
 SECRET_KEY             <your Django secret key>
+SENTRY_KEY             <your Sentry key>
 ====================   =================================================================
 
 Monitoring with Sentry
