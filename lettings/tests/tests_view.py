@@ -14,6 +14,11 @@ from lettings.models import Letting, Address
 class TestLettingsView:
     @pytest.mark.django_db
     def test_lettings_index_view_ok(self, get_letting: Letting):
+        """
+        Method to test that index view returns 200
+        Args:
+            get_letting (Letting): a letting object
+        """
         client = Client()
         path = reverse(viewname="lettings:index")
 
@@ -29,6 +34,12 @@ class TestLettingsView:
 
     @pytest.mark.django_db
     def test_lettings_index_view_returns_500(self, monkeypatch: MonkeyPatch, get_letting: Letting):
+        """
+        Method to test that index view returns 500 in a server error case
+        Args:
+            monkeypatch (MonkeyPatch): a MonkeyPatch object
+            get_letting (Letting): a letting object
+        """
         def raise_error():
             raise Exception("forced error")
 
@@ -48,6 +59,12 @@ class TestLettingsView:
 
     @pytest.mark.django_db
     def test_lettings_letting_view_ok(self, get_address: Address, get_letting: Letting):
+        """
+        Method to test that lettings index view returns 200
+        Args:
+            get_address (Address): an address object
+            get_letting (Letting): a letting object
+        """
         client = Client()
         path = reverse(viewname="lettings:letting", kwargs={"letting_id": get_letting.id})
 
@@ -68,6 +85,12 @@ class TestLettingsView:
     @override_settings(DEBUG=False)
     @pytest.mark.django_db
     def test_lettings_letting_view_returns_404(self, get_address: Address, get_letting: Letting):
+        """
+        Method to test that letting index view returns 404 in case of 404 error
+        Args:
+            get_address (Adress): an address object
+            get_letting (Letting): a letting object
+        """
         client = Client()
         path = reverse(viewname="lettings:letting", kwargs={"letting_id": 2})
 
@@ -83,6 +106,12 @@ class TestLettingsView:
     def test_lettings_letting_view_returns_500(self,
                                                monkeypatch: MonkeyPatch,
                                                get_letting: Letting):
+        """
+        Method to test that letting index view returns 500 in case of 500 error
+        Args:
+            monkeypatch (MonkeyPatch): a MonkeyPatch object
+            get_letting (Letting): a letting object
+        """
         def raise_error(*args, **kwargs):
             raise Exception("forced error")
 

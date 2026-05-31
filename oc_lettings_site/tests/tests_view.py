@@ -13,6 +13,9 @@ from _pytest.monkeypatch import MonkeyPatch
 class TestOcLettingsSiteView:
     @pytest.mark.django_db
     def test_oc_lettings_site_index_view_ok(self):
+        """
+        Method to test the oc_lettings_site index view
+        """
         client = Client()
         path = reverse(viewname="index")
 
@@ -26,6 +29,11 @@ class TestOcLettingsSiteView:
 
     @pytest.mark.django_db
     def test_oc_lettings_site_index_view_returns_500(self, monkeypatch: MonkeyPatch):
+        """
+        Method to test that the oc_lettings_site index view returns 500 in case of 500 error
+        Args:
+            monkeypatch (MonkeyPatch): Monkey patch method
+        """
         def side_effect(request, template_name, context=None, status=500):
             if template_name == "oc_lettings_site/index.html":
                 raise Exception("forced error")
@@ -38,7 +46,9 @@ class TestOcLettingsSiteView:
         path = reverse(viewname="index")
 
         response = client.get(path=path)
+        content = response.content.decode()
+        expected_h1 = "Internal Error : something wrong with the server !"
 
+        assert expected_h1 in content
         assert response.status_code == 500
         assertTemplateUsed(response, template_name="oc_lettings_site/500.html")
-        assert "Internal Error" in response.content.decode()

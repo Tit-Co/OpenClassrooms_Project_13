@@ -30,6 +30,15 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def custom_404(request: HttpRequest, exception: Exception) -> HttpResponse:
+    """
+    Custom 404 view function
+    Args:
+        request (Request): Http Request object
+        exception (Exception): Exception object
+
+    Returns:
+        An HTTP response with 404 page
+    """
     path = request.path
     elements = path.split("/")
 
@@ -47,6 +56,14 @@ def custom_404(request: HttpRequest, exception: Exception) -> HttpResponse:
 
 
 def custom_500(request: HttpRequest) -> HttpResponse:
+    """
+    Custom 500 view function
+    Args:
+        request (Request): Http Request object
+
+    Returns:
+        An HTTP response with 500 page
+    """
     return render(request=request,
                   template_name="oc_lettings_site/500.html",
                   status=500)

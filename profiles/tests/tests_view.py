@@ -14,6 +14,11 @@ from profiles.models import Profile
 class TestProfilesView:
     @pytest.mark.django_db
     def test_profiles_index_view_ok(self, get_profile: Profile):
+        """
+        Method to test the profiles index view
+        Args:
+            get_profile (Profile): a Profile object
+        """
         client = Client()
         path = reverse(viewname="profiles:index")
 
@@ -30,6 +35,12 @@ class TestProfilesView:
 
     @pytest.mark.django_db
     def test_profiles_index_view_returns_500(self, monkeypatch: MonkeyPatch, get_profile: Profile):
+        """
+        Method to test that the profiles index view returns 500 in case of 500 error
+        Args:
+            monkeypatch (MonkeyPatch): a MonkeyPatch object
+            get_profile (Profile): a Profile object
+        """
         def raise_error():
             raise Exception("forced error")
 
@@ -49,6 +60,11 @@ class TestProfilesView:
 
     @pytest.mark.django_db
     def test_profiles_profile_view_ok(self, get_profile: Profile):
+        """
+        Method to test that the profiles profile view returns 200
+        Args:
+            get_profile (Profile): a Profile object
+        """
         client = Client()
         path = reverse(viewname="profiles:profile", kwargs={"username": get_profile.user.username})
 
@@ -69,6 +85,11 @@ class TestProfilesView:
     @override_settings(DEBUG=False)
     @pytest.mark.django_db
     def test_profiles_profile_view_returns_404(self, get_profile: Profile):
+        """
+        Method to test that the profiles profile view returns 404 in case of 404 error
+        Args:
+            get_profile (Profile): a Profile object
+        """
         client = Client()
         path = reverse(viewname="profiles:profile", kwargs={"username": "test"})
 
@@ -84,6 +105,12 @@ class TestProfilesView:
     def test_profiles_profile_view_returns_500(self,
                                                monkeypatch: MonkeyPatch,
                                                get_profile: Profile):
+        """
+        Method to test that the profiles profile view returns 500 in case of 500 error
+        Args:
+            monkeypatch (MonkeyPatch): a MonkeyPatch object
+            get_profile (Profile): a Profile object
+        """
         def raise_error(*args, **kwargs):
             raise Exception("forced error")
 
