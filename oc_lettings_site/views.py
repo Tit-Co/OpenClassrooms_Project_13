@@ -32,10 +32,12 @@ def index(request: HttpRequest) -> HttpResponse:
 def custom_404(request: HttpRequest, exception: Exception) -> HttpResponse:
     path = request.path
     elements = path.split("/")
+
     context_type = elements[1][:-1]
+    element = str(elements[-2])
 
     context = {"type": context_type,
-               "element": str(elements[-2]),
+               "element": element,
                "error": str(exception)}
 
     return render(request=request,
