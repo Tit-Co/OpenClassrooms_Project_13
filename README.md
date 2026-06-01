@@ -30,44 +30,44 @@ The application must:
 
 ## INSTALLATION
 
-- ### Clone the repository :
+1. ### Clone the repository :
 
-```
-git clone https://github.com/Tit-Co/OpenClassrooms_Project_13.git
-```
+    ```
+    git clone https://github.com/Tit-Co/OpenClassrooms_Project_13.git
+    ```
 
-- ### Navigate into the project directory : `cd OpenClassrooms_Project_13`
+2. ### Navigate into the project directory : `cd OpenClassrooms_Project_13`
 
-- ### Create a virtual environment and dependencies :
+3. ### Create a virtual environment and dependencies :
 
-  1. #### With [uv](https://docs.astral.sh/uv/)
+   - #### With [uv](https://docs.astral.sh/uv/)
 
-      `uv` is an environment and dependencies manager.
+      uv is an environment and dependencies manager.
     
-      - #### Install environment and dependencies : `uv sync`
+      - Install environment and dependencies : `uv sync`
 
-  2. #### With pip
+   - #### With [pip](https://pip.pypa.io/en/stable/)
 
-     - #### Install the virtual env : `python -m venv env`
+     - Install the virtual env : `python -m venv env`
 
-     - #### Activate the virtual env : `source env/bin/activate` in Git Bash on Windows or on macOS / Linux, or `env\Scripts\activate` on Windows  
+     - Activate the virtual env : `source env/bin/activate` in Git Bash on Windows or on macOS / Linux, or `env\Scripts\activate` on Windows  
 
-  3. #### With [Poetry](https://python-poetry.org/docs/)
+   - #### With [Poetry](https://python-poetry.org/docs/)
 
-      `Poetry` is a tool for dependency management and packaging in Python.
-    
-      - #### Install the virtual env : `py -3.10 -m venv env`
-    
-      - #### Activate the virtual env : `poetry env activate`
+      Poetry is a tool for dependency management and packaging in Python.
+        
+      - Install the virtual env : `py -3.10 -m venv env`
+        
+        - Activate the virtual env : `poetry env activate`
 
-- ### Install dependencies 
-  1. #### With [uv](https://docs.astral.sh/uv/) : `uv sync` or `uv pip install -r requirements.txt` or `uv add -r requirements.txt`
-
-  2. #### With pip : `pip install -r requirements.txt` 
-
-  3. #### With [Poetry](https://python-poetry.org/docs/) : `poetry install`
+4. ### Install dependencies 
+   - With [uv](https://docs.astral.sh/uv/) : `uv sync` or `uv pip install -r requirements.txt` or `uv add -r requirements.txt`
   
-  (NB : Poetry and UV will read the `pyproject.toml` file to know which dependencies to install)
+   - With [pip](https://pip.pypa.io/en/stable/) : `pip install -r requirements.txt`
+  
+   - With [Poetry](https://python-poetry.org/docs/) : `poetry install`
+  
+   (NB : Poetry and UV will read the `pyproject.toml` file to know which dependencies to install)
 
 ---
 
@@ -137,7 +137,7 @@ Here are some examples of the application execution.
     <img src="docs/screenshots/flake8_report_screenshot.png" width="auto" style="border: 1px solid grey; border-radius: 10px;">
 </p>
 
-- **Type the command below in the terminal to generate another report with [flake8-html](https://pypi.org/project/flake8-html/) tool :** ` flake8`
+- **Type the command below in the terminal to generate another report with [flake8-html](https://pypi.org/project/flake8-html/) tool :** `flake8`
     - The app code has a setup.cfg file that specify Flake 8 options as below : 
         ```
         format = html
