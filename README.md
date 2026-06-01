@@ -40,25 +40,25 @@ git clone https://github.com/Tit-Co/OpenClassrooms_Project_13.git
 
 - ### Create a virtual environment and dependencies :
 
-1. #### With [uv](https://docs.astral.sh/uv/)
+  1. #### With [uv](https://docs.astral.sh/uv/)
 
-    `uv` is an environment and dependencies manager.
+      `uv` is an environment and dependencies manager.
     
-    - #### Install environment and dependencies : `uv sync`
+      - #### Install environment and dependencies : `uv sync`
 
-2. #### With pip
+  2. #### With pip
 
-   - #### Install the virtual env : `python -m venv env`
+     - #### Install the virtual env : `python -m venv env`
 
-   - #### Activate the virtual env : `source env/bin/activate` in Git Bash on Windows or on macOS / Linux, or `env\Scripts\activate` on Windows  
+     - #### Activate the virtual env : `source env/bin/activate` in Git Bash on Windows or on macOS / Linux, or `env\Scripts\activate` on Windows  
 
-3. #### With [Poetry](https://python-poetry.org/docs/)
+  3. #### With [Poetry](https://python-poetry.org/docs/)
 
-    `Poetry` is a tool for dependency management and packaging in Python.
+      `Poetry` is a tool for dependency management and packaging in Python.
     
-    - #### Install the virtual env : `py -3.10 -m venv env`
+      - #### Install the virtual env : `py -3.10 -m venv env`
     
-    - #### Activate the virtual env : `poetry env activate`
+      - #### Activate the virtual env : `poetry env activate`
 
 - ### Install dependencies 
   1. #### With [uv](https://docs.astral.sh/uv/) : `uv sync` or `uv pip install -r requirements.txt` or `uv add -r requirements.txt`
