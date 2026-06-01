@@ -42,7 +42,7 @@ The application must:
 
    - #### With [uv](https://docs.astral.sh/uv/)
 
-      uv is an environment and dependencies manager.
+      UV is an environment and dependencies manager.
     
       - Install environment and dependencies : `uv sync`
 
@@ -57,8 +57,8 @@ The application must:
       Poetry is a tool for dependency management and packaging in Python.
         
       - Install the virtual env : `py -3.10 -m venv env`
-        
-        - Activate the virtual env : `poetry env activate`
+
+      - Activate the virtual env : `poetry env activate`
 
 4. ### Install dependencies 
    - With [uv](https://docs.astral.sh/uv/) : `uv sync` or `uv pip install -r requirements.txt` or `uv add -r requirements.txt`
